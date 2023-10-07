@@ -1,135 +1,3 @@
-# import tkinter as tk
-# from tkinter import ttk
-# import sqlite3
-
-# #создаем приложение(окно)
-# class Main(tk.Frame):
-#     def __init__(self, root):
-#         super().__init__(root)
-#         self.init_main()
-#         self.db = db
-
-
-#     #Метод для хранения и инициализации объектов графического интерфейся
-#     def init_main(self):
-#         #создаем панель инструментов
-#         toolbar = tk.Frame(bg='#d7d8e0', bd=2)
-#         toolbar.pack(side=tk.TOP, fill=tk.X)
-
-#         #Добавляем кнопку для добавления нового контакта на главное окно
-#         self.add_img = tk.PhotoImage(file='./img/add.png')
-
-#         #Создадим кнопку
-#         btn_open_dialog = tk.Button(toolbar, bg='#d7d8e9', bd=0,
-#         image = self.add_img, command=self.open_dialog)
-#         btn_open_dialog.pack(side=tk.LEFT)
-
-#         #Отобразим таблицу с данными
-#         self.tree = ttk.Treeview(self, columns=('ID', 'name', 'tel', 'email'),
-#                                  height=45, show='headings')
-#         #Создадим параметры колонкам
-#         self.tree.column('ID', width=30, anchor=tk.CENTER)
-#         self.tree.column('name', width=300, anchor=tk.CENTER)
-#         self.tree.column('tel', width=150, anchor=tk.CENTER)
-#         self.tree.column('email', width=150, anchor=tk.CENTER)
-
-#         #Добавим подписи к колонкам
-#         self.tree.heading('ID', text='ID')
-#         self.tree.heading('name', text='ФИО')
-#         self.tree.heading('tel', text='Телефон')
-#         self.tree.heading('email', text='E-mail')
-
-#         #Упакуем колонки
-#         self.tree.pack(side=tk.LEFT)
-
-#     #Метод который вызывает дочернее окно
-#     def open_dialog(self):
-#         Child()
-#     #Выведем запрос на запись
-#     def records(self, name, tel, email):
-#         self.db.insert_data(name, tel, email)
-
-# #сделаем функционал для добавления нового контакта
-# class Child(tk.Toplevel):
-#     def __init__(self):
-#         super().__init__(root)
-#         self.init_child()
-#     #создаем функцию для инициализации основного метода
-#     def init_child(self):
-#         self.title('Добавить')
-#         self.geometry('400x220')
-#         root.resizable(False, False)
-#         #Перехватываем события
-#         self.grab_set()
-#         self.focus_set()
-
-#         #Создадим форму данных для дочернего окна (сможем ввести данные ФИО Телефон и тд)
-#         label_name = tk.Label(self, text='ФИО:')
-#         label_name.place(x=50, y=50)
-#         label_select = tk.Label(self, text='Телефон')
-#         label_select.place(x=50, y=80)
-#         label_sum = tk.Label(self, text='E-mail')
-#         label_sum.place(x=50, y=110)
-
-#         #строка для ввода имени
-#         self.entry_name = ttk.Entry(self)
-#         self.entry_name.place(x=200, y=50)
-#         #строка для ввода почты
-#         self.entry_email = ttk.Entry(self)
-#         self.entry_email.place(x=200, y=80)
-#         #строка для ввода телефона
-#         self.entry_tel = ttk.Entry(self)
-#         self.entry_tel.place(x=200, y=110)
-
-        
-#         #кнопка для закрытия дочернего окна
-#         self.btn_cancel = ttk.Button(self, text='Закрыть', 
-#                                      command=self.destroy)
-#         #расположение кнопки удаления
-#         self.btn_cancel.place(x=300, y=170)
-#         #кнопка добавления
-#         self.btn_ok = ttk.Button(self, text='Добавить')
-#         self.btn_ok.place(x=220, y=170)
-#         # срабатывание по ЛКМ
-#         # при нажатии кнопки вызывается метод records, которому передаюся значения из строк ввода
-#         self.btn_ok.bind('<Button-1>', lambda event: self.view.records(self.entry_name.get(),
-#                                                                        self.entry_email.get(),
-#                                                                        self.entry_tel.get()))
-# #Создаем класс бд
-# class DB:
-#     def __init__(self):
-#         self.conn = sqlite3.connect('db.db')
-#         self.c = self.conn.cursor()
-#         #Сделаем запрос на создание таблицы
-#         self.c.execute(
-#             """CREATE TABLE IF NOT EXISTS db(
-#             id INTEGER PRIMARY KEY,
-#             name TEXT,
-#             tel TEXT,
-#             email TEXT
-#             )""")
-#         #Сохраним изменения
-#         self.conn.commit()
-#     #Сделаем метод по добавлению данных в бд
-#     def insert_data(self, name, tel, email):
-#         self.c.execute("""INSERT INTO db(name, tel, email)
-#                        VALUES (?, ?, ?)""", (name, tel,email))
-#         #Сохраним изменения
-#         self.conn.commit()
-
-# #способ проверки чтобы один раз открывалось окно 
-# if __name__ == '__main__':
-#     root = tk.Tk()
-#     #создаем экземпляр этого класса для запуска
-#     db = DB()
-#     app = Main(root)
-#     app.pack()
-#     root.title('Телефонная книга')
-#     root.geometry('665x450')
-#     #ограничиваем менять размер окна
-#     root.resizable(False, False)
-#     root.mainloop()
-
 import tkinter as tk
 from tkinter import ttk
 import sqlite3
@@ -137,7 +5,7 @@ import sqlite3
 
 
 
-# класс главного окна
+#создаем приложение(окно)
 class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
@@ -145,24 +13,14 @@ class Main(tk.Frame):
         self.db = db
         self.view_records()
 
-    # хранение и инициализация объектов GUI
+    #Метод для хранения и инициализации объектов графического интерфейса
     def init_main(self):
         # создаем панель инструментов (тулбар)
-        # bg - фон
-        # bd - границы
         toolbar = tk.Frame(bg='#d7d8e0', bd=2)
-        # упаковка
-        # side закрепляет вверху окна
-        # fill растягивает по X (горизонтали)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         self.add_img = tk.PhotoImage(file='./img/add.png')
         # создание кнопки добавления
-        # command - функция по нажатию
-        # bg - фон
-        # bd - граница
-        # compound - ориентация текста (tk.CENTER , tk.LEFT , tk.RIGHT , tk.TOP или tk.BOTTOM.)
-        # image - иконка кнопки
         btn_open_dialog = tk.Button(toolbar, bg='#d7d8e0', bd=0,
                                     image=self.add_img, command=self.open_dialog)
         # упаковка и выравнивание по левому краю
@@ -193,14 +51,10 @@ class Main(tk.Frame):
         btn_refresh.pack(side=tk.LEFT)
 
         # Добавляем Treeview
-        # columns - столбцы
-        # height - высота таблицы
-        # show='headings' скрываем нулевую (пустую) колонку таблицы
         self.tree = ttk.Treeview(self, columns=('ID', 'name', 'tel', 'email'),
                                  height=45, show='headings')
+        
         # добавляем параметры колонкам
-        # width - ширина
-        # anchor - выравнивание текста в ячейке
         self.tree.column("ID", width=30, anchor=tk.CENTER)
         self.tree.column("name", width=300, anchor=tk.CENTER)
         self.tree.column("tel", width=150, anchor=tk.CENTER)
@@ -349,7 +203,6 @@ class Update(Child):
                                                                           self.entry_tel.get()))
 
         # закрываем окно редактирования
-        # add='+' позваляет на одну кнопку вешать более одного события
         btn_edit.bind('<Button-1>', lambda event: self.destroy(), add='+')
         self.btn_ok.destroy()
 
